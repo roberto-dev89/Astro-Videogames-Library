@@ -1,0 +1,62 @@
+---
+import { ClientRouter } from "astro:transitions";
+import "../styles/global.css";
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/sharkIcon.svg" />
+    <title>{title}</title>
+    <ClientRouter />
+  </head>
+  <body
+    class="min-h-screen bg-black text-white font-sans grid place-content-center"
+  >
+    <div class="container mx-auto p-10 grid place-content-center">
+      <slot />
+    </div>
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --accent: 136, 58, 234;
+    --accent-light: 224, 204, 250;
+    --accent-dark: 49, 10, 101;
+    --accent-gradient: linear-gradient(
+      45deg,
+      rgb(var(--accent)),
+      rgb(var(--accent-light)) 30%,
+      white 60%
+    );
+  }
+
+  .read-more-container {
+    overflow: hidden;
+    max-height: 200px; /* altura colapsada */
+    transition: max-height 0.3s ease; /* animación suave */
+  }
+
+  .read-more-container.expanded {
+    max-height: 1000px; /* suficiente para mostrar todo */
+  }
+  .read-more-btn {
+    display: inline-block;
+    margin-top: 0.5rem;
+    color: #8055ff;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  body {
+    background-image: url("/bg.png");
+  }
+
+  body > div {
+    @apply container;
+  }
+</style>

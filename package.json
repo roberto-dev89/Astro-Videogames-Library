@@ -1,0 +1,21 @@
+{
+  "name": "videogames-nai",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/preact": "^4.0.10",
+    "@astrojs/vercel": "^8.1.4",
+    "@justinribeiro/lite-youtube": "^1.7.1",
+    "@tailwindcss/typography": "^0.5.16",
+    "@tailwindcss/vite": "^4.1.4",
+    "astro": "^5.7.5",
+    "preact": "^10.26.5",
+    "tailwindcss": "^4.1.4"
+  }
+}

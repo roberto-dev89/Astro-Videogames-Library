@@ -1,0 +1,60 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+const videogames = await getCollection("videogames");
+console.log(videogames);
+---
+
+<Layout title="Libreria de videojuegos - Nai">
+  <main class="flex justify-center mt-10">
+    <h1
+      class="text-4xl font-bold text-center mb-24 px-6 py-4 rounded-xl text-white backdrop-blur-md bg-[rgba(128,0,255,0.1)] shadow-[0_0_25px_5px_rgba(128,0,255,0.4)]"
+    >
+      Librería de videojuegos <span>- Portafolio</span>
+    </h1>
+  </main>
+
+  <section aria-label="Videojuegos disponibles">
+    <div class="px-4 mx-auto max-w-screen-xl">
+      <div class="grid grid-cols-1 gap-8 sm:grid-cols-3 lg:grid-cols-4">
+        {
+          videogames.map((videogame) => {
+            const { slug, data } = videogame;
+            const {
+              title,
+              img,
+            } = data;
+
+            return (
+              <article class="grid">
+                <a
+                  href={`/videojuego/${slug}`}
+                  class="mb-2 transition hover:scale-110"
+                >
+                  <img
+                    transition:name={`img-${slug}`}
+                    transition:animate="fade"
+                    src={img}
+                    alt={title}
+                    class="mr-5 w-52 h-76 object-cover rounded-lg transition hover:shadow-[0_0_25px_5px_rgba(128,0,255,0.6)] mb-3"
+                  />
+                </a>
+
+                <div class="flex flex-cols-2 justify-between">
+                  <h2 class="text-1xl font-bold leading-tight text-white">
+                    {title.length > 17 ? title.slice(0, 17) : title}
+                  </h2>
+                  
+                  <gamepadLogo/>
+                </div>
+              </article>
+            );
+          })
+        }
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+</style>
