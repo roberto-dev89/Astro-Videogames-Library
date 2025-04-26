@@ -2,7 +2,6 @@
 import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import { render } from "astro:content";
-import { object } from "astro:schema";
 import ReadMore from "../../components/ReadMore.jsx";
 import EpicButton from "../../components/EpicButton.astro";
 import SteamButton from "../../components/SteamButton.astro";
@@ -38,62 +37,72 @@ const {
 const { Content } = await render(videogame);
 ---
 
-<Layout title=`${title}`>
+<Layout title={`${title}`}>
   <main class="max-w-2xl mb-8 flex flex-cols-4 justify-space-between">
-    <a href="/" class="pt-3.5 hover:underline opacity-70 transition me-20"
-      >← Volver atrás</a
-    >
+    <a href="/" class="pt-3.5 hover:underline opacity-70 transition me-20">
+      ← Volver atrás
+    </a>
     <h1 class="text-4xl font-extrabold mb-4 text-center">{title}</h1>
-  </main>
-  <section class="grid grid-cols-3 gap-4">
-    <div class="flex flex-col col-span-2 items-center me-10">
+   </main>
+
+  <section class="max-w-6xl mx-auto px-4 md:px-0 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-4">
+    <div class="md:col-span-2 flex flex-col items-center">
       <lite-youtube
         videoId={video_id}
         transition:name={`img-${slug}`}
-        class="rounded-lg w-2xl shadow-[0_0_25px_5px_rgba(128,0,255,0.3)] mb-12 transition hover:scale-105"
+        class="rounded-lg w-full md:w-[600px] max-w-full shadow-[0_0_25px_5px_rgba(128,0,255,0.3)] mb-8 transition hover:scale-105"
       ></lite-youtube>
 
-      <div class="prose dark:prose-invert w-full text-1xl text-l">
+      <div class="prose dark:prose-invert w-full text-base">
         <ReadMore collapsedHeight={250} client:load>
           <Content />
         </ReadMore>
       </div>
     </div>
+
     <aside class="flex flex-col gap-6">
-      <div
-        class="container bg-zinc-950 rounded-2xl shadow-[0_0_25px_5px_rgba(128,0,255,0.2)] p-4 justify-start prose dark:prose-invert mb-4"
-      >
+      <div class="bg-zinc-950 rounded-2xl shadow-[0_0_25px_5px_rgba(128,0,255,0.2)] p-4 prose dark:prose-invert">
         <h3 class="text-xl font-semibold">Plataformas disponibles:</h3>
-        <span class="">{platform}</span>
-        <h3 class="text-xl font-semibold">Generos:</h3>
-        <span>{ genre }</span>
-        <h3 class="text-xl font-semibold">Precio:</h3>
-        <span>{price}</span>
+        <p>{platform}</p>
+        <h3 class="text-xl font-semibold mt-4">Géneros:</h3>
+        <p>{genre}</p>
+        <h3 class="text-xl font-semibold mt-4">Precio:</h3>
+        <p>{price}</p>
       </div>
-      <div
-        class="item-center bg-zinc-950 rounded-2xl p-4 justify-start prose dark:prose-invert mb-4"
-      >
-        <h2 class="text-2xl text-center font-bold">Visitar en</h2>
-        <div class="flex flex-wrap justify-center gap-4 mt-4 pb-4">
+
+      <div class="bg-zinc-950 rounded-2xl p-4 prose dark:prose-invert">
+        <h2 class="text-2xl text-center font-bold mb-4">Visitar en</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
           <EpicButton buy={epic} />
           <SteamButton buy={steam} />
           <OtherButton buy={other} />
         </div>
       </div>
-      <h2 class="text-2xl text-center font-bold">Detalles</h2>
-      <div
-        class="container bg-neutral-900 rounded-2xl p-4 justify-start prose dark:prose-invert mb-4"
-      >
-        <h3 class="text-xl font-semibold">Desarrollador:</h3>
-        <span class="">{developer}</span>
-        <h3 class="text-xl font-semibold">Publicado por:</h3>
-        <span>{publisher}</span>
-        <h3 class="text-xl font-semibold">Fecha de lanzamiento:</h3>
-        <span>{release_date}</span>
-        <h3 class="text-xl font-semibold">Rating:</h3>
-        <span>{rating}</span>
-        <h3 class="text-xl font-semibold">Version actual:</h3>
-        <span>{current_version}</span>
+
+      <div class="bg-neutral-900 rounded-2xl p-4 prose dark:prose-invert">
+        <h2 class="text-2xl text-center font-bold mb-4">Detalles</h2>
+        <div class="space-y-2">
+          <div>
+            <h3 class="text-lg font-semibold">Desarrollador:</h3>
+            <p>{developer}</p>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold">Publicado por:</h3>
+            <p>{publisher}</p>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold">Fecha de lanzamiento:</h3>
+            <p>{release_date}</p>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold">Rating:</h3>
+            <p>{rating}</p>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold">Versión actual:</h3>
+            <p>{current_version}</p>
+          </div>
+        </div>
       </div>
     </aside>
   </section>
