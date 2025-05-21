@@ -1,6 +1,6 @@
 # 🎮 Astro Videogames Library
 
-Bienvenido a **Astro Videogames Library**, mi portafolio web centrado en una galería visual de videojuegos. Este proyecto está diseñado como una demostración de mis habilidades en desarrollo web moderno, usando tecnologías actuales y buenas prácticas de diseño responsivo.
+Bienvenido a **Astro Videogames Library**, parte de mi portafolio web centrado en una galería visual de videojuegos. Este proyecto está diseñado como una demostración de mis habilidades en desarrollo web moderno, usando tecnologías actuales y buenas prácticas de diseño responsivo.
 
 ## 🚀 Tecnologías utilizadas
 
@@ -8,7 +8,7 @@ Bienvenido a **Astro Videogames Library**, mi portafolio web centrado en una gal
 - [Tailwind CSS](https://tailwindcss.com) — Utilidad para estilos rápidos, responsivos y personalizables.
 - [TypeScript](https://www.typescriptlang.org) — Mejora del desarrollo JavaScript con tipado estático.
 - HTML5 y CSS3
-- Deploy en [Vercel](https://vercel.com/) (opcional si ya lo tienes publicado)
+- Deploy en [Vercel](https://vercel.com/)
 
 ## 🧩 Características
 
