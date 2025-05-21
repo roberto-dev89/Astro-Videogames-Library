@@ -6,6 +6,7 @@ import ReadMore from "../../components/ReadMore.jsx";
 import EpicButton from "../../components/EpicButton.astro";
 import SteamButton from "../../components/SteamButton.astro";
 import OtherButton from "../../components/OtherButton.astro";
+import Rating from "../../components/Rating.jsx";
 
 export async function getStaticPaths() {
   const videogames = await getCollection("videogames");
@@ -43,15 +44,22 @@ const { Content } = await render(videogame);
       ← Volver atrás
     </a>
     <h1 class="text-4xl font-extrabold mb-4 text-center">{title}</h1>
-   </main>
+  </main>
 
-  <section class="max-w-6xl mx-auto px-4 md:px-0 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-4">
+  <section
+    class="max-w-6xl mx-auto px-4 md:px-0 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-4"
+  >
     <div class="md:col-span-2 flex flex-col items-center">
       <lite-youtube
         videoId={video_id}
         transition:name={`img-${slug}`}
         class="rounded-lg w-full md:w-[600px] max-w-full shadow-[0_0_25px_5px_rgba(128,0,255,0.3)] mb-8 transition hover:scale-105"
       ></lite-youtube>
+
+      <div class="mb-5">
+        <h2 class="text-2xl text-center font-bold my-6">Rating</h2>
+        <Rating client:load />
+      </div>
 
       <div class="prose dark:prose-invert w-full text-base">
         <ReadMore collapsedHeight={250} client:load>
@@ -61,7 +69,9 @@ const { Content } = await render(videogame);
     </div>
 
     <aside class="flex flex-col gap-6">
-      <div class="bg-zinc-950 rounded-2xl shadow-[0_0_25px_5px_rgba(128,0,255,0.2)] p-4 prose dark:prose-invert">
+      <div
+        class="bg-zinc-950 rounded-2xl shadow-[0_0_25px_5px_rgba(128,0,255,0.2)] p-4 prose dark:prose-invert"
+      >
         <h3 class="text-xl font-semibold">Plataformas disponibles:</h3>
         <p>{platform}</p>
         <h3 class="text-xl font-semibold mt-4">Géneros:</h3>

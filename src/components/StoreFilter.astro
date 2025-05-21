@@ -1,0 +1,128 @@
+<nav class="sticky top-0 z-50 backdrop-blur-md bg-[rgba(0,0,0,0.3)] py-4 mb-8">
+  <div class="max-w-screen-xl mx-auto px-4">
+    <ul class="flex flex-wrap justify-center gap-3 md:gap-4">
+      <li class="w-[calc(50%-0.375rem)] md:w-auto">
+        <button
+          data-filter="all"
+          class="store-filter-btn active w-full md:w-auto px-4 md:px-6 py-2 rounded-xl text-sm md:text-base text-white bg-[rgba(128,0,255,0.1)] hover:bg-[rgba(128,0,255,0.2)] transition-all duration-300 hover:shadow-[0_0_15px_2px_rgba(128,0,255,0.4)]"
+        >
+          All
+        </button>
+      </li>
+      <li class="w-[calc(50%-0.375rem)] md:w-auto">
+        <button
+          data-filter="steam"
+          class="store-filter-btn w-full md:w-auto px-4 md:px-6 py-2 rounded-xl text-sm md:text-base text-white bg-[rgba(128,0,255,0.1)] hover:bg-[rgba(128,0,255,0.2)] transition-all duration-300 hover:shadow-[0_0_15px_2px_rgba(128,0,255,0.4)]"
+        >
+          Steam
+        </button>
+      </li>
+      <li class="w-[calc(50%-0.375rem)] md:w-auto">
+        <button
+          data-filter="epic"
+          class="store-filter-btn w-full md:w-auto px-4 md:px-6 py-2 rounded-xl text-sm md:text-base text-white bg-[rgba(128,0,255,0.1)] hover:bg-[rgba(128,0,255,0.2)] transition-all duration-300 hover:shadow-[0_0_15px_2px_rgba(128,0,255,0.4)]"
+        >
+          Epic
+        </button>
+      </li>
+      <li class="w-[calc(50%-0.375rem)] md:w-auto">
+        <button
+          data-filter="other"
+          class="store-filter-btn w-full md:w-auto px-4 md:px-6 py-2 rounded-xl text-sm md:text-base text-white bg-[rgba(128,0,255,0.1)] hover:bg-[rgba(128,0,255,0.2)] transition-all duration-300 hover:shadow-[0_0_15px_2px_rgba(128,0,255,0.4)]"
+        >
+          Others
+        </button>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<style>
+  .store-filter-btn.active {
+    background-color: rgba(128, 0, 255, 0.3);
+    box-shadow: 0 0 15px 2px rgba(128, 0, 255, 0.4);
+  }
+</style>
+
+<script>
+  function initializeFilter() {
+    function updateActiveButton(clickedButton: HTMLButtonElement) {
+      document.querySelectorAll(".store-filter-btn").forEach((btn) => {
+        btn.classList.remove("active");
+      });
+      clickedButton.classList.add("active");
+    }
+
+    function filterGames(store: string) {
+      const articles = document.querySelectorAll("article");
+
+      articles.forEach((article) => {
+        const shouldShow =
+          store === "all" || article.dataset.stores?.includes(store);
+
+        if (shouldShow) {
+          article.style.display = "grid";
+          article.style.opacity = "0";
+          article.style.transform = "scale(0.8)";
+
+          requestAnimationFrame(() => {
+            article.style.transition = "opacity 0.3s ease, transform 0.3s ease";
+            article.style.opacity = "1";
+            article.style.transform = "scale(1)";
+          });
+        } else {
+          article.style.transition = "opacity 0.3s ease, transform 0.3s ease";
+          article.style.opacity = "0";
+          article.style.transform = "scale(0.8)";
+
+          setTimeout(() => {
+            article.style.display = "none";
+          }, 300);
+        }
+      });
+    }
+
+    document.querySelectorAll(".store-filter-btn").forEach((button) => {
+        
+      button.replaceWith(button.cloneNode(true));
+    });
+
+    document.querySelectorAll(".store-filter-btn").forEach((button) => {
+      button.addEventListener("click", (e) => {
+        const btn = e.currentTarget as HTMLButtonElement;
+        updateActiveButton(btn);
+        filterGames(btn.dataset.filter || "all");
+      });
+    });
+  }
+
+  
+  initializeFilter();
+
+  document.addEventListener("astro:page-load", () => {
+    initializeFilter();
+  });
+
+  document.addEventListener("astro:before-preparation", () => {
+    const activeFilter = document.querySelector(".store-filter-btn.active");
+    if (activeFilter) {
+      sessionStorage.setItem(
+        "activeFilter",
+        (activeFilter as HTMLButtonElement).dataset.filter || "all"
+      );
+    }
+  });
+
+  document.addEventListener("astro:page-load", () => {
+    const savedFilter = sessionStorage.getItem("activeFilter");
+    if (savedFilter) {
+      const button = document.querySelector(
+        `[data-filter="${savedFilter}"]`
+      ) as HTMLButtonElement;
+      if (button) {
+        button.click();
+      }
+    }
+  });
+</script>
+

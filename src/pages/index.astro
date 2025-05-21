@@ -1,32 +1,39 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { getCollection } from "astro:content";
+import StoreFilter from "../components/StoreFilter.astro";
+import Footer from "../components/Footer.astro";
 const videogames = await getCollection("videogames");
 console.log(videogames);
 ---
 
-<Layout title="Libreria de videojuegos - Nai">
-  <main class="flex justify-center mt-10">
+<Layout title="Libreria de videojuegos">
+  <main class="flex flex-col items-center mt-6 md:mt-10">
     <h1
-      class="text-4xl font-bold text-center mb-24 px-6 py-4 rounded-xl text-white backdrop-blur-md bg-[rgba(128,0,255,0.1)] shadow-[0_0_25px_5px_rgba(128,0,255,0.4)]"
+      class="text-2xl md:text-4xl font-bold text-center mb-8 md:mb-12 px-4 md:px-6 py-3 md:py-4 rounded-xl text-white backdrop-blur-md bg-[rgba(128,0,255,0.1)] shadow-[0_0_25px_5px_rgba(128,0,255,0.4)]"
     >
-      Librería de videojuegos <span>- Portafolio</span>
+      Librería de videojuegos
     </h1>
+
+    <StoreFilter />
   </main>
 
   <section aria-label="Videojuegos disponibles">
     <div class="px-4 mx-auto max-w-screen-xl">
-      <div class="grid grid-cols-1 gap-8 sm:grid-cols-3 lg:grid-cols-4">
+      <div
+        class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8"
+      >
         {
           videogames.map((videogame) => {
             const { slug, data } = videogame;
-            const {
-              title,
-              img,
-            } = data;
+            const { title, img, steam, epic, other } = data;
+
+            const stores = [steam && "steam", epic && "epic", other && "other"]
+              .filter(Boolean)
+              .join(" ");
 
             return (
-              <article class="grid">
+              <article class="grid" data-stores={stores}>
                 <a
                   href={`/videojuego/${slug}`}
                   class="mb-2 transition hover:scale-110"
@@ -36,16 +43,16 @@ console.log(videogames);
                     transition:animate="fade"
                     src={img}
                     alt={title}
-                    class="mr-5 w-52 h-76 object-cover rounded-lg transition hover:shadow-[0_0_25px_5px_rgba(128,0,255,0.6)] mb-3"
+                    class="w-full h-auto aspect-[2/3] object-cover rounded-lg transition hover:shadow-[0_0_25px_5px_rgba(128,0,255,0.6)] mb-3"
                   />
                 </a>
 
-                <div class="flex flex-cols-2 justify-between">
-                  <h2 class="text-1xl font-bold leading-tight text-white">
-                    {title.length > 17 ? title.slice(0, 17) : title}
+                <div class="flex flex-cols-2 justify-between items-center px-1">
+                  <h2 class="text-sm md:text-base font-bold leading-tight text-white">
+                    {title.length > 17 ? `${title.slice(0, 17)}...` : title}
                   </h2>
-                  
-                  <gamepadLogo/>
+
+                  <gamepadLogo />
                 </div>
               </article>
             );
@@ -54,7 +61,8 @@ console.log(videogames);
       </div>
     </div>
   </section>
+
+  <Footer />
 </Layout>
 
-<style>
-</style>
+<style></style>
